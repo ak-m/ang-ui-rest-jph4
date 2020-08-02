@@ -32,8 +32,18 @@ export class ListComponent implements OnInit {
 
   deleteUser(id2delete: number) {
     console.log(`Users.ListComponent.deleteUser called with ${id2delete}`);
+    console.log(`DELETE_UI`);
     this.users = this.users.filter(user => user.id != id2delete);
+    console.log(`DELETE_SERVER`);
+    this._usersService.deleteUserById(id2delete)
+                      .subscribe((data) => {
+                        console.log(`Successfully delete user with id ${id2delete} : ${JSON.stringify(data)}`);
+
+                       }, (error)=> {
+                        console.log(`Users.ListComponent.deleteUser Got error while procesing : ${error.message}`);
+                       });
   }
+
 
   getAllUsers(){
     console.log(`Users.ListComponent.getAllUsers called`);

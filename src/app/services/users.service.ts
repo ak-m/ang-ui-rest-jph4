@@ -29,4 +29,10 @@ export class UsersService implements OnInit {
     return this._httpClient.get<User[]>(allUsersUrl);
   }
 
+  deleteUserById(id2delete:number): Observable<any> {
+    const deleteUserUrl:string = this.baseUrl + `/${id2delete}`;
+    console.log(`UsersService.deleteUserById called using ${id2delete} at url ${deleteUserUrl}`);
+    return this._httpClient.delete(deleteUserUrl);
+  }
+
 }
