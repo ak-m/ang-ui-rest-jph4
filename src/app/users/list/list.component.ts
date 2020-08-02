@@ -10,6 +10,9 @@ import { UsersService } from '../../services/users.service';
 })
 export class ListComponent implements OnInit {
 
+  users: User[];
+
+
   constructor(private _usersService:UsersService) { 
     console.log(`Users.ListComponent.constructor called`);
   
