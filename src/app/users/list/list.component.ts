@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../model/User';
 import { JsonPipe } from '@angular/common';
+import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'users-list',
@@ -12,14 +13,14 @@ export class ListComponent implements OnInit {
   users: User[];
 
 
-  constructor() { 
+  constructor(private _usersService:UsersService) { 
     console.log(`Users.ListComponent.constructor called`);
   
   }
 
   ngOnInit(): void {
     console.log(`Users.ListComponent.ngOnInit called`);
-    this.getMockUsers();
+    this.getAllUsers();
   }
 
 
@@ -32,6 +33,22 @@ export class ListComponent implements OnInit {
   deleteUser(id2delete: number) {
     console.log(`Users.ListComponent.deleteUser called with ${id2delete}`);
     this.users = this.users.filter(user => user.id != id2delete);
+  }
+
+  getAllUsers(){
+    console.log(`Users.ListComponent.getAllUsers called`);
+    this._usersService.getAllUsers()
+        .subscribe(
+                   (data) => {
+                      console.log(`Users.ListComponent.getAllUsers Got data from backend of size ${data.length}`);
+                      this.users = data;
+                   }
+                 , (error) => {
+                    console.log(`Users.ListComponent.getAllUsers Got error while procesing : ${error.message}`);
+                 }
+                 );
+
+
   }
 
 
