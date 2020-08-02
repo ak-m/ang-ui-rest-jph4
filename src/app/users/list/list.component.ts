@@ -10,9 +10,6 @@ import { UsersService } from '../../services/users.service';
 })
 export class ListComponent implements OnInit {
 
-  users: User[];
-
-
   constructor(private _usersService:UsersService) { 
     console.log(`Users.ListComponent.constructor called`);
   
@@ -26,7 +23,13 @@ export class ListComponent implements OnInit {
 
   editUser(user2edit: User) {
     console.log(`Users.ListComponent.editUser called with ${JSON.stringify(user2edit)}`);
+    this._usersService.updateUser(user2edit)
+    .subscribe((data) => {
+      console.log(`Successfully edited user - Got sever response ${JSON.stringify(data)}`);
 
+     }, (error)=> {
+      console.log(`Users.ListComponent.editUser Got error while editing user : ${error.message}`);
+     });;
   }
 
 
@@ -40,10 +43,20 @@ export class ListComponent implements OnInit {
                         console.log(`Successfully delete user with id ${id2delete} : ${JSON.stringify(data)}`);
 
                        }, (error)=> {
-                        console.log(`Users.ListComponent.deleteUser Got error while procesing : ${error.message}`);
+                        console.log(`Users.ListComponent.deleteUser Got error while deleting user : ${error.message}`);
                        });
   }
 
+  createUser(user2create:User){
+    console.log(`Users.ListComponent.createUser called with ${JSON.stringify(user2create)}`);
+    this._usersService.createUser(user2create)
+    .subscribe((data) => {
+      console.log(`Successfully created user - Got sever response ${JSON.stringify(data)}`);
+
+     }, (error)=> {
+      console.log(`Users.ListComponent.createUser Got error while creating user : ${error.message}`);
+     });
+  }
 
   getAllUsers(){
     console.log(`Users.ListComponent.getAllUsers called`);
